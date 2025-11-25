@@ -17,14 +17,22 @@ RESPUESTAS = {
         "Lamento que estés pasando por un momento difícil. Recuerda que no estás solo/a. 🤗",
         "Tus sentimientos son válidos. Permítete sentir, pero también recuerda que eres fuerte. 💪",
         "Es normal tener días difíciles. Lo importante es que estás buscando apoyo, eso es muy valiente. 🌟",
-        "Está bien llorar. Las lágrimas son una forma de liberar lo que llevamos dentro. Te acompaño. 💙"
+        "Está bien llorar. Las lágrimas son una forma de liberar lo que llevamos dentro. Te acompaño. 💙",
+        "Siento que estés pasando por esto. A veces la tristeza nos visita, pero no se quedará para siempre. 🌸",
+        "Tu dolor es real y merece ser reconocido. No tienes que fingir que estás bien. 💙",
+        "Entiendo que todo parezca oscuro ahora. Pero has sobrevivido a días difíciles antes, y lo harás de nuevo. 🌟",
+        "La tristeza es parte de ser humano. No te hace débil sentirte así. Te hace real. 💫"
     ],
     'ansiedad': [
         "Respira profundo. Inhala... exhala... Estás a salvo en este momento. 🌸",
         "La ansiedad puede ser abrumadora, pero recuerda: esto pasará. Estás siendo muy valiente. 💪",
         "Intenta enfocarte en el presente. ¿Qué puedes ver, oír o sentir ahora mismo? Ancláte al momento. 🍃",
         "Tu ansiedad es real, pero no define quién eres. Eres más fuerte que este sentimiento. ✨",
-        "Está bien sentirse ansioso/a. ¿Has probado respirar contando hasta 4? Puede ayudarte a calmarte. 🌿"
+        "Está bien sentirse ansioso/a. ¿Has probado respirar contando hasta 4? Puede ayudarte a calmarte. 🌿",
+        "Reconozco tu ansiedad. Prueba esto: nombra 5 cosas que ves, 4 que tocas, 3 que oyes, 2 que hueles, 1 que saboreas. 🌺",
+        "La ansiedad miente. Te dice que algo terrible pasará, pero estás aquí, ahora, y estás a salvo. 💙",
+        "Tus preocupaciones son válidas, pero no tienen que controlarte. Respira, un momento a la vez. 🍃",
+        "Es agotador sentir ansiedad. Recuerda que tu cuerpo está tratando de protegerte, aunque ahora no haya peligro real. 💫"
     ],
     'estres': [
         "Suena como que has tenido mucho en tu plato. Recuerda tomar pausas, eres humano/a. 🌺",
@@ -116,47 +124,63 @@ RESPUESTAS = {
         "Entiendo. ¿Hay algo específico en lo que pueda ayudarte? 🤗",
         "Gracias por compartir eso conmigo. ¿Cómo puedo apoyarte mejor? 💫",
         "Estoy aquí para ti. Tómate tu tiempo y cuéntame lo que necesites. 🌸",
-        "Te escucho. ¿Qué más hay en tu mente? 💙"
+        "Te escucho. ¿Qué más hay en tu mente? 💙",
+        "Puedes hablar con confianza. Este es un espacio seguro para ti. 🌟",
+        "Tus palabras importan. Sigue compartiendo lo que sientes. 💫",
+        "Estoy prestando atención. ¿Qué más te gustaría contarme? 🤗",
+        "No hay prisa. Tómate el tiempo que necesites para expresarte. 🌸",
+        "Lo que sientes es importante. Continúa, te estoy escuchando. 💙"
     ]
 }
 
 # Palabras clave expandidas para mejor detección
 PALABRAS_CLAVE = {
     'saludos': ['hola', 'hey', 'buenos días', 'buenas tardes', 'buenas noches', 
-                'qué tal', 'saludos', 'hi', 'hello', 'buenas'],
-    'tristeza': ['triste', 'mal', 'deprimido', 'deprimida', 'solo', 'sola', 
-                 'llorar', 'lloro', 'dolor', 'sufro', 'horrible', 'terrible',
-                 'melancólico', 'melancólica', 'desanimado', 'desanimada'],
+                'qué tal', 'saludos', 'hi', 'hello', 'buenas', 'holi', 'que onda'],
+    'tristeza': ['triste', 'mal', 'deprimido', 'deprimida', 'lloro', 'llorando',
+                 'llorar', 'dolor', 'sufro', 'sufriendo', 'horrible', 'terrible',
+                 'melancólico', 'melancólica', 'desanimado', 'desanimada', 'apagado',
+                 'vacío', 'vacía', 'tristeza', 'pena', 'decaído', 'decaída'],
     'ansiedad': ['ansiedad', 'ansioso', 'ansiosa', 'nervioso', 'nerviosa', 
                  'preocupado', 'preocupada', 'pánico', 'angustia', 'inquieto',
-                 'inquieta', 'temor', 'agobiado', 'agobiada', 'abrumado', 'abrumada'],
+                 'inquieta', 'temor', 'agobiado', 'agobiada', 'abrumado', 'abrumada',
+                 'ataque de ansiedad', 'no puedo respirar', 'taquicardia', 'palpitaciones'],
     'estres': ['estrés', 'estres', 'estresado', 'estresada', 'presión', 'presionado',
-               'sobrepasado', 'sobrepasada', 'ocupado', 'ocupada', 'ajetreado', 'tensión'],
+               'sobrepasado', 'sobrepasada', 'ocupado', 'ocupada', 'ajetreado', 'tensión',
+               'sobrecarga', 'demasiado', 'colapso', 'desbordado', 'desbordada'],
     'soledad': ['solo', 'sola', 'soledad', 'abandonado', 'abandonada', 'aislado',
-                'aislada', 'nadie me entiende', 'incomprendido', 'incomprendida'],
+                'aislada', 'nadie me entiende', 'incomprendido', 'incomprendida',
+                'sin amigos', 'sin nadie', 'me siento solo', 'me siento sola'],
     'miedo': ['miedo', 'asustado', 'asustada', 'terror', 'aterrado', 'aterrada',
-              'pánico', 'temor', 'me da miedo', 'tengo miedo'],
+              'pánico', 'temor', 'me da miedo', 'tengo miedo', 'aterrorizado',
+              'espantado', 'espantada', 'horrorizado'],
     'confusion': ['confundido', 'confundida', 'confusión', 'no sé', 'perdido', 'perdida',
-                  'desorientado', 'desorientada', 'dudas', 'indeciso', 'indecisa'],
+                  'desorientado', 'desorientada', 'dudas', 'indeciso', 'indecisa',
+                  'no entiendo', 'qué hago', 'qué debo hacer', 'no se que hacer'],
     'enojo': ['enojado', 'enojada', 'enojo', 'molesto', 'molesta', 'furioso', 'furiosa',
-              'rabia', 'ira', 'enfadado', 'enfadada', 'irritado', 'irritada', 'cabreado'],
+              'rabia', 'ira', 'enfadado', 'enfadada', 'irritado', 'irritada', 'cabreado',
+              'cabreada', 'odio', 'frustrado', 'frustrada', 'harto', 'harta'],
     'cansancio': ['cansado', 'cansada', 'agotado', 'agotada', 'exhausto', 'exhausta',
-                  'fatigado', 'fatigada', 'sueño', 'rendido', 'rendida'],
+                  'fatigado', 'fatigada', 'sueño', 'rendido', 'rendida', 'sin energía',
+                  'sin fuerzas', 'colapsado', 'colapsada', 'destruido', 'destruida'],
     'felicidad': ['feliz', 'alegre', 'contento', 'contenta', 'genial', 'excelente',
-                  'maravilloso', 'bien', 'muy bien', 'fantástico', 'increíble', 'emocionado'],
+                  'maravilloso', 'bien', 'muy bien', 'fantástico', 'increíble', 'emocionado',
+                  'emocionada', 'super bien', 'de maravilla', 'radiante', 'eufórico'],
     'gratitud': ['gracias', 'agradezco', 'agradecido', 'agradecida', 'graciasss',
-                 'thank', 'muchas gracias', 'te agradezco'],
-    'motivacion': ['motiva', 'motivación', 'ánimo', 'animo', 'ayuda', 'puedo',
-                   'fuerza', 'lograr', 'conseguir', 'éxito', 'meta', 'objetivo'],
+                 'thank', 'muchas gracias', 'te agradezco', 'mil gracias'],
+    'motivacion': ['motiva', 'motivación', 'ánimo', 'animo', 'ayúdame', 'ayuda', 
+                   'fuerza', 'lograr', 'conseguir', 'éxito', 'meta', 'objetivo',
+                   'necesito ánimo', 'dame fuerzas', 'inspírame', 'impulso'],
     'desesperanza': ['no puedo más', 'me quiero morir', 'sin esperanza', 'rendirme',
                      'no vale la pena', 'mejor morir', 'suicidarme', 'acabar con todo',
-                     'no tiene sentido', 'desesperado', 'desesperada'],
+                     'no tiene sentido', 'desesperado', 'desesperada', 'sin salida',
+                     'ya no aguanto', 'quiero desaparecer', 'no hay salida'],
     'despedida': ['adiós', 'adios', 'chao', 'hasta luego', 'me voy', 'bye',
-                  'nos vemos', 'chau', 'hasta pronto']
+                  'nos vemos', 'chau', 'hasta pronto', 'me despido']
 }
 
 def detectar_emocion(mensaje):
-    """Detecta la emoción predominante en el mensaje del usuario"""
+    """Detecta la emoción predominante en el mensaje del usuario con análisis mejorado"""
     mensaje_lower = mensaje.lower()
     
     # Priorizar detección de desesperanza (importante para seguridad)
@@ -164,27 +188,53 @@ def detectar_emocion(mensaje):
         if palabra in mensaje_lower:
             return 'desesperanza'
     
-    # Contador de coincidencias por categoría
+    # Contador de coincidencias por categoría con pesos mejorados
     puntuaciones = {}
     
     for categoria, palabras in PALABRAS_CLAVE.items():
         if categoria == 'desesperanza':  # Ya la verificamos
             continue
         puntuacion = 0
+        coincidencias = 0
+        
         for palabra in palabras:
             if palabra in mensaje_lower:
-                # Palabras más largas tienen más peso
-                puntuacion += len(palabra)
+                coincidencias += 1
+                # Peso basado en longitud de palabra y coincidencia exacta
+                peso_base = len(palabra)
+                
+                # Palabras completas valen más (no solo substring)
+                palabras_mensaje = mensaje_lower.split()
+                if palabra in palabras_mensaje:
+                    peso_base *= 2
+                
+                # Primera palabra del mensaje tiene más peso
+                if mensaje_lower.startswith(palabra):
+                    peso_base *= 1.5
+                
+                puntuacion += peso_base
+        
+        # Bonus por múltiples coincidencias en la misma categoría
+        if coincidencias > 1:
+            puntuacion *= (1 + coincidencias * 0.2)
+        
         if puntuacion > 0:
             puntuaciones[categoria] = puntuacion
     
-    # Devolver la categoría con mayor puntuación
+    # Si encontramos emociones, devolver la más fuerte
     if puntuaciones:
         return max(puntuaciones, key=puntuaciones.get)
     
-    # Si el mensaje es muy corto, respuesta general
+    # Para mensajes cortos sin palabras clave, analizar contexto
     if len(mensaje) < 20:
-        return 'general'
+        # Detectar signos de pregunta (confusión/ayuda)
+        if '?' in mensaje:
+            return 'confusion'
+        # Detectar exclamaciones (puede ser enojo o felicidad)
+        if '!' in mensaje and mensaje.count('!') > 1:
+            return 'felicidad' if any(word in mensaje_lower for word in ['jaja', 'jeje', 'wow']) else 'enojo'
+        # Si no hay palabras clave pero el mensaje es corto, dar ánimo
+        return 'animo'
     
     # Por defecto, dar ánimo
     return 'animo'
