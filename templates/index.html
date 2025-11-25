@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ChatBot de Ánimo - Tu Compañero Emocional</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <div class="chat-container">
+        <div class="chat-header">
+            <h1>💙 Tu Compañero de Ánimo</h1>
+            <p>Estoy aquí para escucharte y animarte</p>
+            <div class="emotion-indicator" id="emotionIndicator"></div>
+        </div>
+        
+        <div class="chat-messages" id="chatMessages">
+            <div class="message bot-message">
+                <div class="message-content">
+                    ¡Hola! 😊 Estoy aquí para acompañarte. Puedo ayudarte si te sientes triste, ansioso/a, estresado/a, solo/a, confundido/a o simplemente necesitas ánimo. ¿Cómo te sientes hoy?
+                </div>
+            </div>
+        </div>
+        
+        <div class="chat-input-container">
+            <input 
+                type="text" 
+                id="userInput" 
+                class="chat-input" 
+                placeholder="Escribe tu mensaje aquí..."
+                autocomplete="off"
+            >
+            <button id="sendBtn" class="send-btn">Enviar</button>
+        </div>
+        
+        <div class="disclaimer">
+            <small>💡 Si estás en crisis, por favor contacta a un profesional o línea de ayuda.</small>
+        </div>
+    </div>
+    
+    <script src="{{ url_for('static', filename='script.js') }}"></script>
+</body>
+</html>
