@@ -23,9 +23,11 @@ const EMOTION_LABELS = {
     'animo': '✨ Dando ánimo',
     'general': '💭 Escuchando',
     'que_hacer': '🤔 Pregunta: ¿Qué hacer?',
+    'sentirse_mejor': '💡 Pregunta: ¿Cómo sentirse mejor?',
     'por_que': '🤔 Pregunta: ¿Por qué?',
     'cuando': '🤔 Pregunta: ¿Cuándo?',
-    'ayuda_practica': '💡 Buscando consejos prácticos'
+    'ayuda_practica': '💡 Buscando consejos prácticos',
+    'no_se_que_hacer': '🤔 Sensación de estar perdido/a'
 };
 
 // Función para agregar mensaje al chat

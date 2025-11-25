@@ -202,7 +202,9 @@ STOP_WORDS = {
 PATRONES_PREGUNTAS = {
     'que_hacer': {
         'palabras': ['qué puedo hacer', 'qué hago', 'qué debería hacer', 'qué me recomiendas',
-                     'qué me aconsejas', 'cómo puedo', 'cómo hago', 'necesito ayuda con'],
+                     'qué me aconsejas', 'cómo puedo', 'cómo hago', 'necesito ayuda con',
+                     'como puedo', 'como hago', 'que deberia hacer', 'que hago para',
+                     'ayudame a', 'ayúdame a', 'como me', 'cómo me'],
         'respuestas': [
             "Entiendo que buscas orientación. ¿Podrías contarme más sobre la situación específica? Así podré ayudarte mejor. 💙",
             "Es valioso que busques soluciones. Cuéntame más detalles sobre lo que estás enfrentando y exploremos opciones juntos. 🌟",
@@ -211,9 +213,23 @@ PATRONES_PREGUNTAS = {
             "Veo que necesitas orientación. A veces ayuda dividir el problema en partes más pequeñas. ¿Por dónde quieres empezar? 🌸"
         ]
     },
+    'sentirse_mejor': {
+        'palabras': ['cómo puedo sentirme mejor', 'como puedo sentirme mejor', 'quiero sentirme mejor',
+                     'cómo me siento mejor', 'como me siento mejor', 'como sentirme mejor',
+                     'cómo sentirme mejor', 'para sentirme mejor', 'sentirme bien', 'estar mejor',
+                     'mejorar mi estado', 'mejorarme', 'recuperarme'],
+        'respuestas': [
+            "Para sentirte mejor, prueba: 1) Sal a caminar 15-20 minutos (el movimiento ayuda), 2) Habla con alguien de confianza, 3) Haz algo que normalmente disfrutas, aunque no tengas ganas. ¿Cuál crees que podrías probar hoy? 💙",
+            "Aquí hay estrategias que pueden ayudarte: • Ejercicio suave (caminar, estirarte), • Técnicas de respiración profunda, • Escuchar música que te guste, • Escribir lo que sientes, • Contactar a un amigo. ¿Alguna te llama la atención? 🌟",
+            "Para mejorar tu estado emocional: 1) Cuida tu cuerpo (duerme bien, come saludable), 2) Practica gratitud (nombra 3 cosas positivas del día), 3) Limita redes sociales, 4) Busca apoyo profesional si lo necesitas. 💫",
+            "Te recomiendo: • Sal de tu espacio actual (aunque sea al balcón), • Escucha música que te energice, • Haz algo creativo o manual, • Practica mindfulness 5 minutos, • Habla con alguien que te entienda. 🌸",
+            "Algunas cosas que pueden ayudarte: 1) El método 5-4-3-2-1 (nombra 5 cosas que ves, 4 que tocas, 3 que oyes, 2 que hueles, 1 que saboreas), 2) Respiración 4-7-8, 3) Llama a alguien querido, 4) Haz una lista de logros recientes. 🤗"
+        ]
+    },
     'por_que': {
         'palabras': ['por qué me siento', 'por qué estoy', 'por qué me pasa', 'por qué siento',
-                     'por qué tengo', 'no entiendo por qué'],
+                     'por qué tengo', 'no entiendo por qué', 'porque me siento', 'porque estoy',
+                     'a qué se debe', 'cual es la razon', 'cuál es la razón'],
         'respuestas': [
             "Es natural preguntarse el porqué de nuestros sentimientos. A veces no hay una sola razón, y está bien. ¿Qué crees que podría estar influyendo? 💙",
             "Buscar entender nuestras emociones es importante. Los sentimientos pueden tener múltiples causas. ¿Hay algo que haya cambiado recientemente? 🌟",
@@ -223,7 +239,8 @@ PATRONES_PREGUNTAS = {
     },
     'cuando': {
         'palabras': ['cuándo pasará', 'cuándo me sentiré', 'cuándo terminará', 'cuándo mejorará',
-                     'hasta cuándo'],
+                     'hasta cuándo', 'cuando pasara', 'cuando me sentire', 'cuando terminara',
+                     'cuando mejorare', 'cuanto tiempo', 'cuánto tiempo'],
         'respuestas': [
             "Sé que quisieras saber cuándo terminará esto. Aunque no tengo una fecha exacta, sé que los sentimientos difíciles son temporales. 💙",
             "Entiendo la necesidad de ver un final. Cada persona tiene su propio ritmo de sanación. Vas avanzando, aunque no siempre lo sientas. 🌟",
@@ -233,12 +250,26 @@ PATRONES_PREGUNTAS = {
     },
     'ayuda_practica': {
         'palabras': ['dame un consejo', 'necesito un consejo', 'qué me sugieres', 'algún tip',
-                     'alguna técnica', 'ejercicio', 'método'],
+                     'alguna técnica', 'ejercicio', 'método', 'dame tips', 'dame consejos',
+                     'que me sugieres', 'alguna recomendacion', 'alguna recomendación',
+                     'tecnicas', 'técnicas', 'estrategias', 'herramientas'],
         'respuestas': [
-            "Con gusto te comparto algunas técnicas: 1) Respiración 4-7-8 (inhala 4, sostén 7, exhala 8), 2) Escribe tus pensamientos, 3) Contacta a alguien de confianza. ¿Cuál te resuena más? 💙",
-            "Algunas estrategias que pueden ayudar: • Sal a caminar 15 minutos • Nombra 5 cosas que ves, 4 que tocas, 3 que oyes • Practica autocompasión hablándote como a un amigo. 🌟",
-            "Te sugiero probar: 1) El método 5-4-3-2-1 para ansiedad, 2) Escribir una lista de cosas que SÍ puedes controlar, 3) Una pausa consciente de 5 minutos. ¿Te interesa profundizar en alguna? 💫",
-            "Podrías intentar: • Movimiento suave (estirarte, caminar) • Música que te guste • Llamar a alguien que te escuche • Permitirte descansar sin culpa. 🌸"
+            "Con gusto te comparto técnicas efectivas: 1) Respiración 4-7-8 (inhala 4seg, sostén 7seg, exhala 8seg), 2) Escribe tus pensamientos sin filtro, 3) La regla de los 2 minutos: haz algo productivo por solo 2 minutos. ¿Cuál te resuena? 💙",
+            "Herramientas que pueden ayudarte: • Método 5-4-3-2-1 para ansiedad, • Journaling (escribir 3 páginas en la mañana), • Ejercicio físico aunque sea 10 minutos, • Meditación guiada (apps: Headspace, Calm). 🌟",
+            "Te sugiero probar: 1) Box breathing (inhala 4, sostén 4, exhala 4, sostén 4), 2) Lista de cosas que SÍ puedes controlar hoy, 3) Pausa consciente de 5 minutos, 4) Pregúntate: '¿Qué necesito ahora mismo?' 💫",
+            "Estrategias prácticas: • Movimiento (yoga, caminar, bailar), • Música que te guste, • Llamar a alguien de confianza, • Técnica RAIN (Reconoce, Acepta, Investiga, Nutre), • Permitirte descansar sin culpa. 🌸",
+            "Ejercicios efectivos: 1) Gratitud: escribe 3 cosas buenas del día, 2) Visualización: imagina tu lugar seguro, 3) Grounding: toca algo frío/caliente, 4) Afirmaciones positivas, 5) Rutina matutina consistente. 🤗"
+        ]
+    },
+    'no_se_que_hacer': {
+        'palabras': ['no sé qué hacer', 'no se que hacer', 'estoy perdido', 'estoy perdida',
+                     'me siento perdido', 'me siento perdida', 'no se por donde empezar',
+                     'no sé por dónde empezar', 'estoy confundido', 'estoy confundida'],
+        'respuestas': [
+            "Entiendo esa sensación de estar perdido/a. Empecemos por algo pequeño: ¿qué es lo más urgente o lo que más te preocupa ahora mismo? A veces un paso a la vez es todo lo que necesitamos. 💙",
+            "Es normal sentirse así cuando hay mucho en la mente. Te propongo: 1) Escribe todo lo que te preocupa, 2) Elige UNA cosa para enfocarte hoy, 3) Da un paso pequeño hacia eso. No necesitas resolver todo ahora. 🌟",
+            "Cuando no sabes por dónde empezar, pregúntate: '¿Qué haría mi yo más sabio/a?' o '¿Qué le diría a un amigo en mi situación?' A veces esa perspectiva ayuda. 💫",
+            "No necesitas tener todas las respuestas ahora. Está bien sentirse perdido/a. Prueba esto: 1) Respira profundo, 2) Identifica una necesidad básica (descanso, comida, conexión), 3) Atiéndela. Lo demás puede esperar. 🌸"
         ]
     }
 }
@@ -265,11 +296,16 @@ def extraer_palabras_significativas(mensaje):
 def detectar_patron_pregunta(mensaje):
     """Detecta si el mensaje coincide con patrones de preguntas específicas"""
     mensaje_lower = mensaje.lower()
+    mensaje_normalizado = normalizar_texto(mensaje)
     
+    # Revisar cada patrón en orden de especificidad
     for patron, datos in PATRONES_PREGUNTAS.items():
         for frase in datos['palabras']:
-            if frase in mensaje_lower:
+            frase_normalizada = normalizar_texto(frase)
+            # Buscar tanto en el mensaje original como en el normalizado
+            if frase in mensaje_lower or frase_normalizada in mensaje_normalizado:
                 return patron
+    
     return None
 
 def calcular_similitud_palabras(palabras_mensaje, palabras_emocion):
