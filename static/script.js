@@ -21,7 +21,11 @@ const EMOTION_LABELS = {
     'saludos': '👋 Saludando',
     'despedida': '👋 Despedida',
     'animo': '✨ Dando ánimo',
-    'general': '💭 Escuchando'
+    'general': '💭 Escuchando',
+    'que_hacer': '🤔 Pregunta: ¿Qué hacer?',
+    'por_que': '🤔 Pregunta: ¿Por qué?',
+    'cuando': '🤔 Pregunta: ¿Cuándo?',
+    'ayuda_practica': '💡 Buscando consejos prácticos'
 };
 
 // Función para agregar mensaje al chat

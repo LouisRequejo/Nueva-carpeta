@@ -1,6 +1,7 @@
 from flask import Flask, render_template, request, jsonify
 import random
 import re
+from collections import Counter
 
 app = Flask(__name__)
 
@@ -179,69 +180,213 @@ PALABRAS_CLAVE = {
                   'nos vemos', 'chau', 'hasta pronto', 'me despido']
 }
 
-def detectar_emocion(mensaje):
-    """Detecta la emoción predominante en el mensaje del usuario con análisis mejorado"""
+# Palabras comunes a ignorar (stop words en español)
+STOP_WORDS = {
+    'el', 'la', 'de', 'que', 'y', 'a', 'en', 'un', 'ser', 'se', 'no', 'haber',
+    'por', 'con', 'su', 'para', 'como', 'estar', 'tener', 'le', 'lo', 'todo',
+    'pero', 'más', 'hacer', 'o', 'poder', 'decir', 'este', 'ir', 'otro', 'ese',
+    'si', 'me', 'ya', 'ver', 'porque', 'dar', 'cuando', 'él', 'muy', 'sin',
+    'vez', 'mucho', 'saber', 'qué', 'sobre', 'mi', 'alguno', 'mismo', 'yo',
+    'también', 'hasta', 'año', 'dos', 'querer', 'entre', 'así', 'primero',
+    'desde', 'grande', 'eso', 'ni', 'nos', 'llegar', 'pasar', 'tiempo', 'ella',
+    'sí', 'día', 'uno', 'bien', 'poco', 'deber', 'entonces', 'poner', 'cosa',
+    'tanto', 'hombre', 'parecer', 'nuestro', 'tan', 'donde', 'ahora', 'parte',
+    'después', 'vida', 'quedar', 'siempre', 'creer', 'hablar', 'llevar', 'dejar',
+    'nada', 'cada', 'seguir', 'menos', 'nuevo', 'encontrar', 'algo', 'solo',
+    'decir', 'estos', 'trabajar', 'nombre', 'aquí', 'dar', 'allí', 'tienen',
+    'tiene', 'puede', 'puedo', 'puedes', 'estoy', 'está', 'estás', 'son', 'soy',
+    'eres', 'he', 'has', 'ha', 'hemos', 'han', 'ante', 'un', 'una', 'unos', 'unas'
+}
+
+# Patrones de preguntas y respuestas específicas
+PATRONES_PREGUNTAS = {
+    'que_hacer': {
+        'palabras': ['qué puedo hacer', 'qué hago', 'qué debería hacer', 'qué me recomiendas',
+                     'qué me aconsejas', 'cómo puedo', 'cómo hago', 'necesito ayuda con'],
+        'respuestas': [
+            "Entiendo que buscas orientación. ¿Podrías contarme más sobre la situación específica? Así podré ayudarte mejor. 💙",
+            "Es valioso que busques soluciones. Cuéntame más detalles sobre lo que estás enfrentando y exploremos opciones juntos. 🌟",
+            "Me gustaría ayudarte a encontrar un camino. ¿Qué aspecto del problema te preocupa más en este momento? 💫",
+            "Buscar ayuda es un gran paso. Háblame más sobre tu situación para poder darte un apoyo más específico. 🤗",
+            "Veo que necesitas orientación. A veces ayuda dividir el problema en partes más pequeñas. ¿Por dónde quieres empezar? 🌸"
+        ]
+    },
+    'por_que': {
+        'palabras': ['por qué me siento', 'por qué estoy', 'por qué me pasa', 'por qué siento',
+                     'por qué tengo', 'no entiendo por qué'],
+        'respuestas': [
+            "Es natural preguntarse el porqué de nuestros sentimientos. A veces no hay una sola razón, y está bien. ¿Qué crees que podría estar influyendo? 💙",
+            "Buscar entender nuestras emociones es importante. Los sentimientos pueden tener múltiples causas. ¿Hay algo que haya cambiado recientemente? 🌟",
+            "Tus sentimientos son válidos, tengan o no una causa clara. ¿Quieres explorar qué situaciones los desencadenan? 💫",
+            "A veces nuestras emociones nos hablan de necesidades no satisfechas. ¿Qué crees que tu emoción está tratando de decirte? 🌸"
+        ]
+    },
+    'cuando': {
+        'palabras': ['cuándo pasará', 'cuándo me sentiré', 'cuándo terminará', 'cuándo mejorará',
+                     'hasta cuándo'],
+        'respuestas': [
+            "Sé que quisieras saber cuándo terminará esto. Aunque no tengo una fecha exacta, sé que los sentimientos difíciles son temporales. 💙",
+            "Entiendo la necesidad de ver un final. Cada persona tiene su propio ritmo de sanación. Vas avanzando, aunque no siempre lo sientas. 🌟",
+            "Es agotador no saber cuándo mejorará. Lo que sí sé es que estás dando pasos importantes al buscar apoyo. Eso cuenta. 💫",
+            "Desear que termine el dolor es completamente normal. Cada día que enfrentas es progreso, aunque sea invisible. 🌸"
+        ]
+    },
+    'ayuda_practica': {
+        'palabras': ['dame un consejo', 'necesito un consejo', 'qué me sugieres', 'algún tip',
+                     'alguna técnica', 'ejercicio', 'método'],
+        'respuestas': [
+            "Con gusto te comparto algunas técnicas: 1) Respiración 4-7-8 (inhala 4, sostén 7, exhala 8), 2) Escribe tus pensamientos, 3) Contacta a alguien de confianza. ¿Cuál te resuena más? 💙",
+            "Algunas estrategias que pueden ayudar: • Sal a caminar 15 minutos • Nombra 5 cosas que ves, 4 que tocas, 3 que oyes • Practica autocompasión hablándote como a un amigo. 🌟",
+            "Te sugiero probar: 1) El método 5-4-3-2-1 para ansiedad, 2) Escribir una lista de cosas que SÍ puedes controlar, 3) Una pausa consciente de 5 minutos. ¿Te interesa profundizar en alguna? 💫",
+            "Podrías intentar: • Movimiento suave (estirarte, caminar) • Música que te guste • Llamar a alguien que te escuche • Permitirte descansar sin culpa. 🌸"
+        ]
+    }
+}
+
+def normalizar_texto(texto):
+    """Normaliza el texto eliminando acentos y convirtiendo a minúsculas"""
+    texto = texto.lower()
+    # Reemplazar acentos comunes
+    reemplazos = {
+        'á': 'a', 'é': 'e', 'í': 'i', 'ó': 'o', 'ú': 'u',
+        'ñ': 'n', '¿': '', '?': '', '¡': '', '!': ''
+    }
+    for orig, repl in reemplazos.items():
+        texto = texto.replace(orig, repl)
+    return texto
+
+def extraer_palabras_significativas(mensaje):
+    """Extrae palabras significativas eliminando stop words"""
+    mensaje_normalizado = normalizar_texto(mensaje)
+    palabras = re.findall(r'\b\w+\b', mensaje_normalizado)
+    palabras_significativas = [p for p in palabras if p not in STOP_WORDS and len(p) > 2]
+    return palabras_significativas
+
+def detectar_patron_pregunta(mensaje):
+    """Detecta si el mensaje coincide con patrones de preguntas específicas"""
     mensaje_lower = mensaje.lower()
     
-    # Priorizar detección de desesperanza (importante para seguridad)
+    for patron, datos in PATRONES_PREGUNTAS.items():
+        for frase in datos['palabras']:
+            if frase in mensaje_lower:
+                return patron
+    return None
+
+def calcular_similitud_palabras(palabras_mensaje, palabras_emocion):
+    """Calcula similitud basada en palabras en común"""
+    if not palabras_mensaje or not palabras_emocion:
+        return 0
+    
+    # Contar coincidencias
+    coincidencias = len(set(palabras_mensaje) & set(palabras_emocion))
+    
+    # Normalizar por el tamaño del mensaje
+    similitud = coincidencias / max(len(palabras_mensaje), 1)
+    
+    return similitud
+
+def detectar_emocion(mensaje):
+    """Detecta la emoción predominante en el mensaje del usuario con PLN mejorado"""
+    mensaje_lower = mensaje.lower()
+    
+    # 1. PRIORIDAD: Detectar patrones de preguntas
+    patron_pregunta = detectar_patron_pregunta(mensaje)
+    if patron_pregunta:
+        return f'pregunta_{patron_pregunta}'
+    
+    # 2. Priorizar detección de desesperanza (importante para seguridad)
     for palabra in PALABRAS_CLAVE['desesperanza']:
         if palabra in mensaje_lower:
             return 'desesperanza'
     
-    # Contador de coincidencias por categoría con pesos mejorados
+    # 3. Extraer palabras significativas del mensaje
+    palabras_mensaje = extraer_palabras_significativas(mensaje)
+    
+    # 4. Análisis con PLN: contador de coincidencias por categoría con pesos mejorados
     puntuaciones = {}
     
     for categoria, palabras in PALABRAS_CLAVE.items():
         if categoria == 'desesperanza':  # Ya la verificamos
             continue
+        
         puntuacion = 0
         coincidencias = 0
+        palabras_normalizadas = [normalizar_texto(p) for p in palabras]
         
         for palabra in palabras:
-            if palabra in mensaje_lower:
+            palabra_normalizada = normalizar_texto(palabra)
+            
+            if palabra in mensaje_lower or palabra_normalizada in ' '.join(palabras_mensaje):
                 coincidencias += 1
-                # Peso basado en longitud de palabra y coincidencia exacta
+                # Peso basado en longitud de palabra
                 peso_base = len(palabra)
                 
                 # Palabras completas valen más (no solo substring)
-                palabras_mensaje = mensaje_lower.split()
-                if palabra in palabras_mensaje:
-                    peso_base *= 2
+                palabras_msg = mensaje_lower.split()
+                if palabra in palabras_msg or palabra_normalizada in palabras_mensaje:
+                    peso_base *= 2.5
                 
                 # Primera palabra del mensaje tiene más peso
                 if mensaje_lower.startswith(palabra):
-                    peso_base *= 1.5
+                    peso_base *= 2
+                
+                # Frases exactas tienen mucho más valor
+                if len(palabra.split()) > 1 and palabra in mensaje_lower:
+                    peso_base *= 3
                 
                 puntuacion += peso_base
         
-        # Bonus por múltiples coincidencias en la misma categoría
+        # 5. Bonus por densidad de palabras emocionales
+        if palabras_mensaje:
+            similitud = calcular_similitud_palabras(palabras_mensaje, palabras_normalizadas)
+            puntuacion *= (1 + similitud)
+        
+        # 6. Bonus por múltiples coincidencias en la misma categoría
         if coincidencias > 1:
-            puntuacion *= (1 + coincidencias * 0.2)
+            puntuacion *= (1 + coincidencias * 0.3)
         
         if puntuacion > 0:
             puntuaciones[categoria] = puntuacion
     
-    # Si encontramos emociones, devolver la más fuerte
+    # 7. Si encontramos emociones, devolver la más fuerte
     if puntuaciones:
-        return max(puntuaciones, key=puntuaciones.get)
+        emocion_detectada = max(puntuaciones, key=puntuaciones.get)
+        # Solo retornar si la confianza es razonable
+        if puntuaciones[emocion_detectada] > 3:
+            return emocion_detectada
     
-    # Para mensajes cortos sin palabras clave, analizar contexto
-    if len(mensaje) < 20:
+    # 8. Para mensajes cortos sin palabras clave, analizar contexto
+    if len(mensaje) < 30:
         # Detectar signos de pregunta (confusión/ayuda)
-        if '?' in mensaje:
+        if '?' in mensaje or mensaje_lower.startswith(('cómo', 'como', 'qué', 'que', 'cuál', 'cual')):
             return 'confusion'
         # Detectar exclamaciones (puede ser enojo o felicidad)
         if '!' in mensaje and mensaje.count('!') > 1:
-            return 'felicidad' if any(word in mensaje_lower for word in ['jaja', 'jeje', 'wow']) else 'enojo'
-        # Si no hay palabras clave pero el mensaje es corto, dar ánimo
-        return 'animo'
+            return 'felicidad' if any(word in mensaje_lower for word in ['jaja', 'jeje', 'jiji', 'wow', 'genial']) else 'enojo'
+        # Si hay emoción detectada pero con baja confianza, usarla
+        if puntuaciones:
+            return max(puntuaciones, key=puntuaciones.get)
+        # Mensaje corto sin contexto claro
+        return 'general'
     
-    # Por defecto, dar ánimo
+    # 9. Mensajes largos sin palabras clave reconocidas
+    if len(palabras_mensaje) > 5:
+        return 'general'
+    
+    # 10. Por defecto, dar ánimo
     return 'animo'
 
 def obtener_respuesta(mensaje):
     """Obtiene una respuesta apropiada basada en el mensaje del usuario"""
     emocion = detectar_emocion(mensaje)
+    
+    # Verificar si es un patrón de pregunta específica
+    if emocion.startswith('pregunta_'):
+        patron = emocion.replace('pregunta_', '')
+        respuestas = PATRONES_PREGUNTAS[patron]['respuestas']
+        return random.choice(respuestas)
+    
+    # Respuesta normal basada en emoción
     respuestas = RESPUESTAS.get(emocion, RESPUESTAS['general'])
     return random.choice(respuestas)
 
@@ -258,9 +403,12 @@ def chat():
     respuesta = obtener_respuesta(mensaje_usuario)
     emocion_detectada = detectar_emocion(mensaje_usuario)
     
+    # Limpiar el nombre de emoción para el frontend
+    emocion_display = emocion_detectada.replace('pregunta_', '')
+    
     return jsonify({
         'respuesta': respuesta,
-        'emocion': emocion_detectada
+        'emocion': emocion_display
     })
 
 if __name__ == '__main__':
