@@ -6,10 +6,10 @@
 # ========================================
 # CONFIGURA ESTAS VARIABLES
 # ========================================
-USUARIO="TU_USUARIO"  # Cambia esto por tu usuario de PythonAnywhere
-REPO_URL="https://github.com/TU_USUARIO/chatbot-animo.git"  # URL de tu repositorio
+USUARIO="chatbotpsicologia"  # Cambia esto por tu usuario de PythonAnywhere
+REPO_URL="https://github.com/LouisRequejo/Nueva-carpeta.git"  # URL de tu repositorio
 PROJECT_NAME="chatbot-animo"
-PYTHON_VERSION="python3.10"
+PYTHON_VERSION="python3.9"
 
 # ========================================
 # NO MODIFICAR DESDE AQUÍ
